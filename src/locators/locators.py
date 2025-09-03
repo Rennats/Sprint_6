@@ -19,6 +19,7 @@ class OrderPageLocators:
     METRO_FIELD = (By.CLASS_NAME, "select-search__input")
     PHONE_FIELD = (By.CSS_SELECTOR, "input[placeholder='* Телефон: на него позвонит курьер']")
     NEXT_BUTTON = (By.XPATH, "//button[text()='Далее']")
+    COMBO_BOX_DATA_OPTION = (By.XPATH, "//div[contains(text(), '{}')]")
 
     DATE_FIELD = (By.CSS_SELECTOR, "input[placeholder='* Когда привезти самокат']")
     RENTAL_PERIOD_FIELD = (By.CSS_SELECTOR, ".Dropdown-placeholder")

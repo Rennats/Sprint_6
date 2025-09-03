@@ -1,4 +1,5 @@
 import allure
+
 from allure import step
 from src.locators.locators import MainPageLocators
 from src.pages.base_page import BasePage
@@ -6,12 +7,12 @@ from src.pages.base_page import BasePage
 
 class MainPage(BasePage):
 
-    @allure.step("Class initialization")
+    @allure.step("MainPage class initialization")
     def __init__(self, driver):
         super().__init__(driver)
 
     @allure.step("Update locator {locator} for FAQ item №{index}")
-    def update_locator_index(self, locator, index):
+    def _update_locator_index(self, locator, index):
         # Обновление индекса элемента локатора
         locator_list = list(locator)
         locator_list[1] = locator_list[1].format(index)
@@ -37,7 +38,7 @@ class MainPage(BasePage):
     @allure.step("Click FAQ question item №{index}")
     def click_faq_question(self, index):
         # Обновление локатора FAQ_ACCORDION_HEADING
-        faq_accordion_heading_locator = self.update_locator_index(MainPageLocators.FAQ_ACCORDION_HEADING, index)
+        faq_accordion_heading_locator = self._update_locator_index(MainPageLocators.FAQ_ACCORDION_HEADING, index)
         # Скролл до нужного пункта FAQ
         self.scroll_to_element(faq_accordion_heading_locator)
         # Проверка отображения нужного пункта FAQ
@@ -45,14 +46,14 @@ class MainPage(BasePage):
         # Нажатие на нужный пункт FAQ
         self.click_element(faq_accordion_heading_locator)
         # Обновление локатора FAQ_ACCORDION_PANEL
-        faq_accordion_panel_locator = self.update_locator_index(MainPageLocators.FAQ_ACCORDION_PANEL, index)
+        faq_accordion_panel_locator = self._update_locator_index(MainPageLocators.FAQ_ACCORDION_PANEL, index)
         # Ожидание отображения текста нужного пункта FAQ
         self.element_is_present(faq_accordion_panel_locator)
 
     @allure.step("Get text of FAQ question item №{index}")
     def get_faq_answer(self, index):
         # Обновление локатора FAQ_ACCORDION_PANEL
-        faq_accordion_panel_locator = self.update_locator_index(MainPageLocators.FAQ_ACCORDION_PANEL, index)
+        faq_accordion_panel_locator = self._update_locator_index(MainPageLocators.FAQ_ACCORDION_PANEL, index)
         return self.get_text(faq_accordion_panel_locator)
 
     @allure.step("Click to scooter logo on main page")

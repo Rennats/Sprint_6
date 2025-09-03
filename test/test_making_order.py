@@ -3,28 +3,23 @@ import pytest
 
 from conftest import driver
 from src.config import Config
+from src.data import order_data
 from src.pages.main_page import MainPage
 from src.pages.order_page import OrderPage
 
 
 @allure.feature("Test making of order")
 class TestOrder:
-    order_data = [
-        ("Иван", "Иванов", "Москва, ул. Ленина 1", "Сокольники", "+79991234567", "09.09.2025", "сутки", "black", "Комментарий1", "top"),
-        ("Петр", "Петров", "Москва, ул. Пушкина 2", "Черкизовская", "+79997654321", "02.10.2025", "двое суток", "grey", "Комментарий2", "bottom")
-        ]
 
-    @allure.title("Order scooter from {entry_point}")
-    @pytest.mark.parametrize("name, surname, address, metro, phone, date, period, color, comment, entry_point", order_data)
-    def test_order_scooter(self, driver, entry_point, name, surname, address, metro, phone, date, period, color, comment):
+    @allure.title("Order scooter by {click_order_button_function} function")
+    @pytest.mark.parametrize("name, surname, address, metro, phone, date, period, color, comment, click_order_button_function", order_data)
+    def test_order_scooter(self, driver, name, surname, address, metro, phone, date, period, color, comment, click_order_button_function):
         main_page = MainPage(driver)
         # Обработка запроса на сохранение cookie
         main_page.check_cookie()
-        # Обработка точки входа в сценарий заказа самоката: кнопка сверху или снизу страницы
-        if entry_point == "top":
-            main_page.click_order_button_top()
-        else:
-            main_page.click_order_button_bottom()
+        # Вход в сценарий заказа самоката - клик по кнопке вверху/внизу через переданное имя функции
+        func = getattr(main_page, click_order_button_function)
+        func()
 
         order_page = OrderPage(driver)
         # Заполнение персональных данных
@@ -44,7 +39,8 @@ class TestOrder:
         main_page.click_order_button_top()
         # Нажатие на логотип 'Самоката'
         main_page.check_click_scooter_logo()
-        assert driver.current_url == Config.URL
+        # Проверка перехода на главную страницу сервиса
+        assert main_page.get_current_url() == Config.URL
 
     @allure.title("Check Yandex logo redirects to Dzen")
     def test_yandex_logo_redirect(self, driver):
@@ -57,4 +53,5 @@ class TestOrder:
         main_page.switch_to_last_window()
         # Проверка на отображение логотипа Дзен
         main_page.check_dzen_stella()
-        assert "dzen.ru" in driver.current_url
+        # Проверка перехода на dzen.ru
+        assert "dzen.ru" in main_page.get_current_url()

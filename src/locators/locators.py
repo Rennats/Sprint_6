@@ -5,6 +5,8 @@ class MainPageLocators:
     COOKIE_CONSENT = (By.XPATH, "//div[contains(@class,'App_CookieConsent')]")
     COOKIE_BTN = (By.ID, "rcc-confirm-button")
     DZEN_STELLA = (By.XPATH, "//div[contains(@class,'stella_logo')]")
+    FAQ_ACCORDION_HEADING = (By.XPATH, "//div[(@id='accordion__heading-{}')]")
+    FAQ_ACCORDION_PANEL = (By.XPATH, "//div[(@id='accordion__panel-{}')]//p")
     ORDER_BUTTON_TOP = (By.XPATH, "//div[contains(@class,'Header_Nav')]/button[contains(@class,'Button_Button')]")
     ORDER_BUTTON_BOTTOM = (By.XPATH, "//div[contains(@class,'Home_FinishButton')]/button[text()='Заказать']")
     SCOOTER_LOGO = (By.XPATH, "//a[contains(@class,'Header_LogoScooter')]")

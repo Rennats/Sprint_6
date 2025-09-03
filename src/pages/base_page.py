@@ -15,7 +15,7 @@ class BasePage:
             return self.wait.until(EC.presence_of_element_located(locator))
 
     def click_element(self, locator):
-        with step(f"Click to {locator}"):
+        with step(f"Click to element {locator}"):
             self.wait.until(EC.element_to_be_clickable(locator)).click()
 
     def enter_text(self, locator, text):
@@ -23,7 +23,7 @@ class BasePage:
             self.find_element(locator).send_keys(text)
 
     def get_text(self, locator):
-        with step(f"Get text of {locator}"):
+        with step(f"Get text of element {locator}"):
             return self.find_element(locator).text
 
 
@@ -32,7 +32,7 @@ class BasePage:
             return self.find_element(locator).is_displayed()
 
     def element_is_present(self, locator):
-        with step(f"Check the presence of {locator}"):
+        with step(f"Check the presence of element {locator}"):
             try:
                 self.wait.until(EC.presence_of_element_located(locator))
                 return True

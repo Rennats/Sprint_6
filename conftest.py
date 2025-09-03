@@ -4,7 +4,6 @@ from selenium import webdriver
 from src.config import Config
 
 
-# @pytest.fixture
 @pytest.fixture
 def driver():
     options = webdriver.FirefoxOptions()
